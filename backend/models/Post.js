@@ -11,6 +11,7 @@ const PostSchema=new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
     expiresAt: { type: Date, required: true },
     reactions: { type: Map, of: Number, default: {} }, // { "😂": 3, "❤️": 1 }
+    userReactions: { type: Map, of: String, default: {} }, // { "anon123": "😂" } → userId: emoji
     userId: { type: String, required: true }, // anonymous, device-bound
     editToken: { type: String, required: true } // stored locally on device
 

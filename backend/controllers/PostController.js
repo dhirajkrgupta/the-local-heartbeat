@@ -54,4 +54,33 @@ const GetNearbyPost = async (req, res) => {
   }
 };
 
-export { CreatePost, GetNearbyPost };
+const ToggleReaction=async(req,res)=>{
+  try {
+    const { postId } = req.params;
+    const { emoji, userId } = req.body;
+    const post = await PostModel.findById(postId);
+    if (!post) return res.status(404).json({ error: "Post not found" });
+    const currentReaction = post.userReactions.get(userId);
+
+    if (currentReaction === emoji) {
+      // User already reacted with this emoji → remove it
+      post.reactions.set(emoji, (post.reactions.get(emoji) || 1) - 1);
+      post.userReactions.delete(userId);
+    } else {
+      // If reacted with a different emoji → remove old, add new
+      if (currentReaction) {
+        post.reactions.set(currentReaction, (post.reactions.get(currentReaction) || 1) - 1);
+      }
+      post.reactions.set(emoji, (post.reactions.get(emoji) || 0) + 1);
+      post.userReactions.set(userId, emoji);
+    }
+    await post.save();
+    res.status(200).json({ reactions: post.reactions, userReactions: post.userReactions });
+
+  } catch (error) {
+        res.status(500).json({ error: "Failed to toggle reaction", details: err.message });
+
+  }
+}
+
+export { CreatePost, GetNearbyPost,ToggleReaction};
