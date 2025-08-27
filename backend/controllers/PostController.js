@@ -20,7 +20,7 @@ const CreatePost = async (req, res) => {
     res.status(201).json({ post: newPost, editToken }); // return editToken to client
   } catch (error) {
     res
-          res.status(500).json({ error: "Failed to create post", details: err.message });
+          res.status(500).json({ error: "Failed to create post", details: error.message });
 
   }
 };
@@ -47,7 +47,8 @@ const GetNearbyPost = async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ error: "Failed to fetch  nearby posts", details: err.message });
+      .json({ error: "Failed to fetch  nearby posts", details: error.message });
+      console.log(error)
   }
 };
 
@@ -81,7 +82,7 @@ const ToggleReaction = async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ error: "Failed to toggle reaction", details: err.message });
+      .json({ error: "Failed to toggle reaction", details: error.message });
   }
 };
 
@@ -118,7 +119,7 @@ const DeletePost=async(req,res)=>{
     await post.deleteOne();
     res.status(200).json({ message: "Post deleted" });
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete post", details: err.message });
+    res.status(500).json({ error: "Failed to delete post", details: error.message });
 
   }
 }

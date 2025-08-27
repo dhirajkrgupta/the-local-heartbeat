@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-
+const JWT_SECRET=process.env.JWT_SECRET;
 const authMiddleware = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   if (!authHeader) return res.status(401).json({ error: "No token provided" });
