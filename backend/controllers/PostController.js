@@ -22,6 +22,7 @@ const CreatePost = async (req, res) => {
       content: newPost.content,
       isOwner: newPost.userId === req.userId,
       displayHandle: newPost.displayHandle,
+      votes: p.votes,
       createdAt: newPost.createdAt,
     };
 
@@ -59,6 +60,7 @@ const GetNearbyPost = async (req, res) => {
       content: p.content,
       isOwner: p.userId === req.userId,
       displayHandle: p.displayHandle,
+      votes: p.votes,
       createdAt: p.createdAt,
     }));
     res.json(feed);
@@ -145,4 +147,22 @@ const DeletePost = async (req, res) => {
   }
 };
 
-export { CreatePost, GetNearbyPost, ToggleReaction, EditPost, DeletePost };
+const VotePost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const { vote } = req.body; // vote should be +1 or -1
+    const post = await PostModel.findById(postId);
+    if (!post) return res.status(404).json({ error: "Post not found" });
+    post.votes += vote;
+    await post.save();
+    res.status(200).json({ votes: post.votes });
+
+  } catch (error) {
+    console.error("Error voting post:", error);
+    res
+      .status(500)
+      .json({ error: "Failed to vote post", details: error.message });
+  }
+};
+
+export { CreatePost, GetNearbyPost, ToggleReaction, EditPost, DeletePost,VotePost };

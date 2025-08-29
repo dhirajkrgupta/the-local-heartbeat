@@ -19,13 +19,18 @@ export default function PostCard({ post, onEdit, onDelete, onVote }) {
     setEditingContent('');
   };
 
+  const getTime=(createdAt)=>{
+    const date = new Date(createdAt)
+    return date.toLocaleString()
+  }
+
   return (
     <div className="bg-white rounded-lg border border-gray-300 hover:border-gray-400 transition-colors shadow-sm">
       <div className="flex">
         {/* Vote section */}
         <div className="flex flex-col items-center p-2 w-12">
           <button 
-            onClick={() => onVote(post.id, 'up')}
+            onClick={() => onVote(post.id, 1)}
             className="text-gray-400 hover:text-orange-500 p-1"
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -33,10 +38,10 @@ export default function PostCard({ post, onEdit, onDelete, onVote }) {
             </svg>
           </button>
           <span className="text-xs font-bold text-gray-700">
-            {post.upvotes - post.downvotes}
+            {post.votes}
           </span>
           <button 
-            onClick={() => onVote(post.id, 'down')}
+            onClick={() => onVote(post.id, -1)}
             className="text-gray-400 hover:text-blue-600 p-1"
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -48,9 +53,9 @@ export default function PostCard({ post, onEdit, onDelete, onVote }) {
         {/* Content section */}
         <div className="flex-1 p-3">
           <div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
-            <span className="font-medium text-gray-700">u/{post.author}</span>
+            <span className="font-medium text-gray-700">u/{post.displayHandle}</span>
             <span>•</span>
-            <span>{post.timeAgo}</span>
+            <span>{getTime(post.createdAt)}</span>
           </div>
 
           {isEditing ? (
@@ -88,13 +93,6 @@ export default function PostCard({ post, onEdit, onDelete, onVote }) {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
                   {post.comments} comments
-                </button>
-                
-                <button className="flex items-center gap-1 hover:text-gray-700 transition-colors">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
-                  </svg>
-                  Share
                 </button>
 
                 {post.isOwner && (

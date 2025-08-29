@@ -1,6 +1,6 @@
 import express from 'express';
 const router=express.Router();
-import {CreatePost,GetNearbyPost,ToggleReaction,EditPost,DeletePost} from '../controllers/PostController.js';
+import {CreatePost,GetNearbyPost,ToggleReaction,EditPost,DeletePost, VotePost} from '../controllers/PostController.js';
 import authMiddleware from '../midleware/Auth.js';
 
 
@@ -12,7 +12,7 @@ router.post('/',authMiddleware,CreatePost);
 router.get('/nearby',authMiddleware,GetNearbyPost)
 
 //Togle reaction
-router.post("/:postId/react",authMiddleware,ToggleReaction);
+router.post("/:postId/vote",authMiddleware,VotePost);
 
 //edit post
 router.put("/:postId", authMiddleware, EditPost);

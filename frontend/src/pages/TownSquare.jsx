@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import InputBox from "../components/InputBox";
 import PostCard from "../components/PostCard";
 import HubLayout from "../components/HubLayout";
-import { createPost, deletePost, getPosts, updatePost } from "../api/posts";
+import { createPost, deletePost, getPosts, updatePost, votePost } from "../api/posts";
 import createSession  from "../api/auth";
 
 export default function TownSquare() {
@@ -61,21 +61,18 @@ const saveEdit = async (postId,editingContent) => {
     await deletePost(postId);
     setPosts(prev => prev.filter(post => post.id !== postId));
   };
-  const handleVote = (postId, type) => {
+  const handleVote = async(postId, vote) => {
+    await votePost(postId, vote);
     setPosts(prev => prev.map(post => {
       if (post.id === postId) {
-        if (type === 'up') {
-          return { ...post, upvotes: post.upvotes + 1 };
-        } else {
-          return { ...post, downvotes: post.downvotes + 1 };
-        }
+          return { ...post, votes: post.votes + vote};
       }
       return post;
     }));
   };
   return (
         <HubLayout 
-      hubName="TownSquare" 
+      hubName="Town Square" 
       hubIcon="🏛️" 
       hubDescription="Local community board"
     >

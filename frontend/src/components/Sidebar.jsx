@@ -13,7 +13,7 @@ export default function Sidebar({ isOpen, onToggle, currentHub }) {
 
   return (
     <>
-      {/* Overlay for mobile */}
+      
       {isOpen && (
         <div 
           className="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden"
@@ -21,7 +21,7 @@ export default function Sidebar({ isOpen, onToggle, currentHub }) {
         />
       )}
       
-      {/* Sidebar */}
+     
       <div className={`fixed left-0 top-0 h-full bg-white border-r border-gray-300 shadow-lg z-30 transform transition-transform duration-300 ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
       } w-64`}>
@@ -44,13 +44,13 @@ export default function Sidebar({ isOpen, onToggle, currentHub }) {
             <button
               key={hub.id}
               onClick={() => {
-                // In real app, use navigate() from react-router
                 console.log(`Navigate to ${hub.path}`);
+                onToggle();
                 navigate(hub.path);
-                onToggle(); // Close sidebar on mobile
+                
               }}
               className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-gray-100 transition-colors ${
-                currentHub === hub.id ? 'bg-blue-50 text-blue-700' : 'text-gray-700'
+                currentHub === hub.name ? 'bg-blue-50 text-blue-700' : 'text-gray-700'
               }`}
             >
               <span className="text-lg">{hub.icon}</span>

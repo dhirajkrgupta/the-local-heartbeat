@@ -56,3 +56,13 @@ export async function deletePost(postId) {
     return await res.json();
 }
 
+export async function votePost(postId,vote) {
+    const res = await fetch(`${API_BASE}/posts/${postId}/vote`, {
+        method: "POST",
+        credentials:"include",
+        body: JSON.stringify({vote}),
+        headers: { "Content-Type": "application/json" },
+    });
+    if (!res.ok) throw new Error('Failed to like post');
+    return await res.json();
+}

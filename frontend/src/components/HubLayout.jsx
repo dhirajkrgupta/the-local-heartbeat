@@ -8,12 +8,12 @@ export default function HubLayout({ hubName, hubIcon, hubDescription, children }
       <Sidebar 
         isOpen={sidebarOpen} 
         onToggle={() => setSidebarOpen(!sidebarOpen)}
-        currentHub="townsquare" // This would be dynamic in real app
+        currentHub={hubName}
       />
       
-      {/* Main content */}
+      
       <div className={`transition-all duration-300 ${sidebarOpen ? 'lg:ml-64' : 'ml-0'}`}>
-        {/* Header */}
+        
         <header className="bg-white border-b border-gray-300 shadow-sm">
           <div className="px-4 py-3">
             <div className="flex items-center gap-3">
@@ -35,7 +35,7 @@ export default function HubLayout({ hubName, hubIcon, hubDescription, children }
           </div>
         </header>
 
-        {/* Page content */}
+        
         <main className="max-w-4xl mx-auto px-4 py-6">
           {children}
         </main>
