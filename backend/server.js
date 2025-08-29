@@ -6,11 +6,13 @@ import cor_options from "./config/cors.js";
 import postRoutes from './routes/postRoutes.js'
 import connectDB from "./db.js";
 import authRoutes from "./routes/authRoutes.js";
+import  cookieParser from 'cookie-parser';
 
 const port = process.env.PORT || 8080;
 
 const app=express();
 
+app.use(cookieParser())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

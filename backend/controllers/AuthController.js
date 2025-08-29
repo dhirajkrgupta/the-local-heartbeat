@@ -10,20 +10,36 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const createAnonymousSession = async (req, res) => {
   try {
     const userId = uuidv4();
-    
-    
     await UserModel.create({ userId });
 
     // Sign JWT with userId
     const token = jwt.sign({ userId }, JWT_SECRET, { expiresIn: "30d" });
 
-    res.status(201).json({ token, userId });
+    res.cookie("authToken", token, {
+      httpOnly: true,
+      // secure: true,
+      sameSite: "lax",
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    });
+
+    res.status(201).json({ success: true });
   } catch (err) {
     res.status(500).json({ error: "Failed to create session", details: err.message });
     console.log(err)
   }
 };
- 
+
+// Check current session
+const checkSession=(req, res) => {
+  const token = req.cookies.authToken;
+  if (!token) return res.json({ authenticated: false });
+
+  jwt.verify(token, JWT_SECRET, (err) => {
+    if (err) return res.json({ authenticated: false });
+    res.json({ authenticated: true }); 
+  });
+}
 
 
-export default createAnonymousSession;
+
+export  {createAnonymousSession,checkSession};

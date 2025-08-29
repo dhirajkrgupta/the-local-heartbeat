@@ -1,29 +1,30 @@
 const API_BASE = "http://localhost:8080/api"; //backend URL
 
-export async function createPost(content, hub) {
+export async function createPost(content, hub,{lng, lat}) {
+  
   const res = await fetch(`${API_BASE}/posts`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("authToken")}`
-    },
+    credentials:"include",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       content,
       hub,
-      location: { type: "Point", coordinates: [77.59, 12.97] }, // dummy location for now
+      location: { type: "Point", coordinates: [lng, lat,] },
       expiresInHours: 2
     })
   });
-  return res.json();
+  if (!res.ok) throw new Error('Failed to create post');
+  const data = await res.json();
+  return data.feed;
 }
 
 export async function getPosts(hub, lat, lng, radiusMeters = 2000) {
+  console.log(lat,lng)
+ 
   const res = await fetch(
     `${API_BASE}/posts/nearby?hub=${encodeURIComponent(hub)}&lat=${lat}&lng=${lng}&radiusMeters=${radiusMeters}`,
     {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
+      credentials:"include"
     }
   );
 
@@ -34,3 +35,23 @@ export async function getPosts(hub, lat, lng, radiusMeters = 2000) {
   return res.json();
 }
 
+export async function updatePost(postId, content) {
+    const res = await fetch(`${API_BASE}/posts/${postId}`, {
+        method: "PUT",
+        credentials:"include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content })
+    });
+    if (!res.ok) throw new Error('Failed to update post');
+    return await res.json();
+}
+
+export async function deletePost(postId) {
+    const res = await fetch(`${API_BASE}/posts/${postId}`, {
+        method: "DELETE",
+        credentials:"include"
+    });
+
+    if (!res.ok) throw new Error('Failed to delete post');
+    return await res.json();
+}

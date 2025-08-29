@@ -4,11 +4,12 @@ import {CreatePost,GetNearbyPost,ToggleReaction,EditPost,DeletePost} from '../co
 import authMiddleware from '../midleware/Auth.js';
 
 
-// Create post
+
+// Create post 
 router.post('/',authMiddleware,CreatePost);
 
 //Get nearby post:
-router.get('/nearby',GetNearbyPost)
+router.get('/nearby',authMiddleware,GetNearbyPost)
 
 //Togle reaction
 router.post("/:postId/react",authMiddleware,ToggleReaction);
