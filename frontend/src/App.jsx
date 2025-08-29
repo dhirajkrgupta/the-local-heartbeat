@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
 import TownSquare from "./pages/TownSquare";
 import BulletinBoard from "./pages/BulletinBoard";
 import LostFound from "./pages/LostFound";
@@ -10,8 +10,6 @@ export default function App() {
   
   return (
     <Router>
-      <div className="min-h-screen bg-gray-50">
-        <Navbar />
         <Routes>
           <Route path="/" element={<TownSquare />} />
           <Route path="/bulletin" element={<BulletinBoard />} />
@@ -19,7 +17,6 @@ export default function App() {
           <Route path="/helpdesk" element={<HelpDesk />} />
           <Route path="/events" element={<Events />} />
         </Routes>
-      </div>
     </Router>
   );
 }

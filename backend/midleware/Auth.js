@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 const JWT_SECRET=process.env.JWT_SECRET;
 
 const authMiddleware = (req, res, next) => {
-  
+   
   const token = req.cookies.authToken;
   if (!token) return res.status(401).json({ error: "No token provided" });
 

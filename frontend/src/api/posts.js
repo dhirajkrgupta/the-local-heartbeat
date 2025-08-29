@@ -55,3 +55,4 @@ export async function deletePost(postId) {
     if (!res.ok) throw new Error('Failed to delete post');
     return await res.json();
 }
+
