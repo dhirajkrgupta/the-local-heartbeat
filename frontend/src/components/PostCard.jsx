@@ -8,9 +8,12 @@ export default function PostCard({ post, onEdit, onDelete, onVote }) {
     setEditingContent(post.content);
     setIsEditing(true);
   };
-
-  const handleSave = () => {
-    onEdit(post.id, editingContent);
+ const handleDelete=async()=>{
+    
+    await onDelete(post.id);
+ }
+  const handleSave =async () => {
+    await onEdit(post.id, editingContent);
     setIsEditing(false);
   };
 
@@ -107,7 +110,7 @@ export default function PostCard({ post, onEdit, onDelete, onVote }) {
                       Edit
                     </button>
                     <button
-                      onClick={() => onDelete(post.id)}
+                      onClick={handleDelete}
                       className="flex items-center gap-1 hover:text-red-600 transition-colors"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

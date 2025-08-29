@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
-import InputBox from "../components/InputBox";
-import PostCard from "../components/PostCard";
+
 import HubLayout from "../components/HubLayout";
-import { createPost, deletePost, getPosts, updatePost, votePost } from "../api/posts";
+import {createEvent,getEvents,updateEvent,deleteEvent,eventRSVP} from "../api/events";
 import createSession  from "../api/auth";
+import EventInputBox from "../components/EventInputBox";
+import EventCard from "../components/EventCard";
 
 export default function Events() {
-  const [content, setContent] = useState("");
   
-  const [posts, setPosts] = useState([]);
+  
+  const [events, setEvents] = useState([]);
   const [location,setLocation]=useState({});
 
 
@@ -30,44 +31,45 @@ export default function Events() {
         const loc = await getUserLocation();
         setLocation(loc);
 
-        const data = await getPosts("Events", loc.lat, loc.lng);
-        setPosts(data);
-        console.log("Fetched posts:", data);
+        const data = await getEvents( loc.lat, loc.lng);
+        setEvents(data);
+        console.log("Fetched events:", data);
       } catch (error) {
-        console.error("Error fetching posts:", error);
+        console.error("Error fetching events:", error);
       }
     }
     fetchData();
   },[]);
 
-  const handleSubmit = async () => {
-    if (!content) return;
-    try {
-      const newPost = await createPost(content, "Events",location);
-      setPosts((prev) => [newPost, ...prev]);
-      console.log("created post:", newPost);
-    } catch (error) {
-      console.error("Error creating posts:", error);
-    }
-    setContent("");
+  const handleSubmit = async (eventData) => {
+    if (!eventData) return;
+        try {
+          console.log("Creating event with data:", eventData, "at location:", location);
+          const newEvent= await createEvent(eventData,location);
+          setEvents((prev) => [newEvent, ...prev]);
+          console.log("created post:", newEvent); 
+        } catch (error) {
+          console.error("Error creating posts:", error);
+        }
   };
-const saveEdit = async (postId,editingContent) => {
-    await updatePost(postId, editingContent);
-    setPosts(prev => prev.map(post =>
-      post.id === postId ? { ...post, content: editingContent } : post
+
+const saveEdit = async (id,editingContent) => {
+    await updateEvent(id, editingContent);
+    setEvents(prev => prev.map(event =>
+      event.id === event ? { ...event, content: editingContent } : event
     ));
   };
-  const handleDeletePost =async (postId) => {
-    await deletePost(postId);
-    setPosts(prev => prev.filter(post => post.id !== postId));
+  const handleDeleteEvent =async (id) => {
+    await deleteEvent(id);
+    setEvents(prev => prev.filter(event => event.id !== id));
   };
-  const handleVote = async(postId, vote) => {
-    await votePost(postId, vote);
-    setPosts(prev => prev.map(post => {
-      if (post.id === postId) {
-          return { ...post, votes: post.votes + vote};
+  const handleRSVP = async(id,vote) => {
+    await eventRSVP(id,vote);
+    setEvents(prev => prev.map(event => {
+      if (event.id === id) {
+          return { ...event, interested: event.interested + vote};
       }
-      return post;
+      return event;
     }));
   };
   return (
@@ -76,19 +78,18 @@ const saveEdit = async (postId,editingContent) => {
       hubIcon="🔍" 
       hubDescription="Discover and share local events and activities"
     >
-      <InputBox 
+      <EventInputBox 
         onSubmit={handleSubmit}
-        placeholder="What's happening in your neighborhood?"
       />
       
       <div className="space-y-3">
-        {posts.map((post) => (
-          <PostCard
-            key={post.id}
-            post={post}
+        {events.map((event) => (
+          <EventCard
+            key={event.id}
+            event={event}
             onEdit={saveEdit}
-            onDelete={handleDeletePost}
-            onVote={handleVote}
+            onDelete={handleDeleteEvent}
+            onVote={handleRSVP}
           />
         ))}
       </div>

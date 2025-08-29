@@ -3,7 +3,7 @@ const API_BASE = "http://localhost:8080/api"; //backend URL
 export async function createPost(content, hub,{lng, lat}) {
   
   const res = await fetch(`${API_BASE}/posts`, {
-    method: "POST",
+    method: "POST", 
     credentials:"include",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -47,9 +47,11 @@ export async function updatePost(postId, content) {
 }
 
 export async function deletePost(postId) {
+  console.log('api delete post id:',postId);
     const res = await fetch(`${API_BASE}/posts/${postId}`, {
         method: "DELETE",
-        credentials:"include"
+        credentials:"include",
+        headers: { "Content-Type": "application/json" }
     });
 
     if (!res.ok) throw new Error('Failed to delete post');

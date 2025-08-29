@@ -6,7 +6,7 @@ import { createPost, deletePost, getPosts, updatePost, votePost } from "../api/p
 import createSession  from "../api/auth";
 
 export default function TownSquare() {
-  const [content, setContent] = useState("");
+
   
   const [posts, setPosts] = useState([]);
   const [location,setLocation]=useState({});
@@ -40,16 +40,16 @@ export default function TownSquare() {
     fetchData();
   },[]);
 
-  const handleSubmit = async () => {
+  const onSubmit = async (content) => {
     if (!content) return;
     try {
+      console.log("Creating post with content:", content, "at location:", location);
       const newPost = await createPost(content, "TownSquare",location);
       setPosts((prev) => [newPost, ...prev]);
       console.log("created post:", newPost);
     } catch (error) {
       console.error("Error creating posts:", error);
     }
-    setContent("");
   };
 const saveEdit = async (postId,editingContent) => {
     await updatePost(postId, editingContent);
@@ -58,6 +58,7 @@ const saveEdit = async (postId,editingContent) => {
     ));
   };
   const handleDeletePost =async (postId) => {
+    
     await deletePost(postId);
     setPosts(prev => prev.filter(post => post.id !== postId));
   };
@@ -77,7 +78,7 @@ const saveEdit = async (postId,editingContent) => {
       hubDescription="Local community board"
     >
       <InputBox 
-        onSubmit={handleSubmit}
+        onSubmit={onSubmit}
         placeholder="What's happening in your neighborhood?"
       />
       

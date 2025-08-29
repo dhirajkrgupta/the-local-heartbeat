@@ -1,11 +1,12 @@
 import { useState } from "react";
 
-export default function CreatePost({ onSubmit, placeholder = "What's happening in your neighborhood?" }) {
+export default function InputBox({ onSubmit, placeholder = "What's happening in your neighborhood?" }) {
   const [content, setContent] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit =async () => {
     if (!content.trim()) return;
-    onSubmit(content);
+    console.log('submitting:', content);
+    await onSubmit(content);
     setContent("");
   };
 

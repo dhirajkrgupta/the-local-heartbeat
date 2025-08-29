@@ -22,7 +22,7 @@ const CreatePost = async (req, res) => {
       content: newPost.content,
       isOwner: newPost.userId === req.userId,
       displayHandle: newPost.displayHandle,
-      votes: p.votes,
+      votes: newPost.votes,
       createdAt: newPost.createdAt,
     };
 
@@ -63,6 +63,7 @@ const GetNearbyPost = async (req, res) => {
       votes: p.votes,
       createdAt: p.createdAt,
     }));
+    feed.sort((a, b) => b.createdAt - a.createdAt); // Newest first
     res.json(feed);
   } catch (error) {
     res
@@ -130,7 +131,8 @@ const EditPost = async (req, res) => {
 
 const DeletePost = async (req, res) => {
   try {
-    const postId = req.params.id;
+    const postId = req.params.postId;
+    
     let post = await PostModel.findById(postId);
     if (!post) return res.status(404).json({ error: "Post not found" });
     if (post.userId !== req.userId) {
@@ -149,6 +151,7 @@ const DeletePost = async (req, res) => {
 
 const VotePost = async (req, res) => {
   try {
+    
     const { postId } = req.params;
     const { vote } = req.body; // vote should be +1 or -1
     const post = await PostModel.findById(postId);

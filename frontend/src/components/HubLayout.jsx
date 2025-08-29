@@ -29,7 +29,7 @@ export default function HubLayout({ hubName, hubIcon, hubDescription, children }
               <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
                 <span className="text-white text-lg">{hubIcon}</span>
               </div>
-              <h1 className="text-xl font-bold text-gray-900">r/{hubName}</h1>
+              <h1 className="text-xl font-bold text-gray-900">h/{hubName}</h1>
               <span className="text-sm text-gray-500">• {hubDescription}</span>
             </div>
           </div>
