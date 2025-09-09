@@ -73,7 +73,7 @@ const saveEdit = async (postId,editingContent) => {
   return (
         <HubLayout 
       hubName="Help Desk" 
-      hubIcon="🔍" 
+      hubIcon="🆘" 
       hubDescription="Report and find lost items in your community"
     >
       <InputBox 
