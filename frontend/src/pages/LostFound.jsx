@@ -75,6 +75,7 @@ const saveEdit = async (postId,editingContent) => {
       hubName="Lost & Found" 
       hubIcon="🔍" 
       hubDescription="Report and find lost items in your community"
+      hubbanner="/lostandfoundbanner.png"
     >
       <InputBox 
         onSubmit={handleSubmit}

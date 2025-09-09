@@ -33,7 +33,7 @@ let routes = [
   {
     path: "*",
     lazy: {
-      Component: async () => (await import("../pages/NotFound")).default,
+      Component: async () => (await import("../components/PostEditor")).default,
     },
   },
 ];

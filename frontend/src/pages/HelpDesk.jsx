@@ -75,6 +75,7 @@ const saveEdit = async (postId,editingContent) => {
       hubName="Help Desk" 
       hubIcon="🆘" 
       hubDescription="Report and find lost items in your community"
+      hubbanner="/helpdesk.png"
     >
       <InputBox 
         onSubmit={handleSubmit}

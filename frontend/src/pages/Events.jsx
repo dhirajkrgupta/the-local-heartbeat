@@ -77,6 +77,7 @@ const saveEdit = async (id,editingContent) => {
       hubName="Events" 
       hubIcon="🔍" 
       hubDescription="Discover and share local events and activities"
+      hubbanner="/events.png"
     >
       <EventInputBox 
         onSubmit={handleSubmit}

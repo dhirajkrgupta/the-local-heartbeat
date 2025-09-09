@@ -23,8 +23,12 @@ export default function PostCard({ post, onEdit, onDelete, onVote }) {
   };
 
   const getTime=(createdAt)=>{
-    const date = new Date(createdAt)
-    return date.toLocaleString()
+    const period =new Date()- new Date(createdAt);
+    if(period<60000) return Math.floor(period/1000)+"s ago";
+    else if(period<3600000) return Math.floor(period/60000)+"m ago";
+    else if(period<86400000) return Math.floor(period/3600000)+"h ago";
+    else if(period<604800000) return Math.floor(period/86400000)+"d ago";
+    else return new Date(createdAt).toLocaleDateString();
   }
 
   return (

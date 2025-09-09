@@ -76,6 +76,7 @@ const saveEdit = async (postId,editingContent) => {
       hubName="Town Square" 
       hubIcon="🏛️" 
       hubDescription="Local community board"
+      hubbanner="/townsquarebanner.png"
     >
       <InputBox 
         onSubmit={onSubmit}
