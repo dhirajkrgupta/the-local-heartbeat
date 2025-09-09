@@ -1,6 +1,6 @@
 import React from 'react'
 
-const HubHeroSection = ({setSidebarOpen}) => {
+const HeroSection = ({setSidebarOpen}) => {
   return (
     <header className="bg-white border-b border-gray-300 shadow-sm">
           <div className="px-4 py-3">
@@ -24,4 +24,4 @@ const HubHeroSection = ({setSidebarOpen}) => {
   )
 }
 
-export default HubHeroSection
+export default HeroSection

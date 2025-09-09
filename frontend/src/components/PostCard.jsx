@@ -90,8 +90,9 @@ export default function PostCard({ post, onEdit, onDelete, onVote }) {
             </div>
           ) : (
             <div>
-              <p className="text-gray-900 text-sm leading-relaxed mb-3">
-                {post.content}
+              <p className="text-gray-900 text-sm leading-relaxed mb-3"
+              dangerouslySetInnerHTML={{ __html: post.content }}>
+                
               </p>
 
               <div className="flex items-center gap-4 text-xs text-gray-500">

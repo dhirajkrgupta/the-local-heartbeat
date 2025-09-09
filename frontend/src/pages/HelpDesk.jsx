@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import InputBox from "../components/InputBox";
 import PostCard from "../components/PostCard";
 import HubLayout from "../components/HubLayout";
 import { createPost, deletePost, getPosts, updatePost, votePost } from "../api/posts";
@@ -76,12 +75,8 @@ const saveEdit = async (postId,editingContent) => {
       hubIcon="🆘" 
       hubDescription="Report and find lost items in your community"
       hubbanner="/helpdesk.png"
+      handleSubmit={handleSubmit}
     >
-      <InputBox 
-        onSubmit={handleSubmit}
-        placeholder="Describe your issue or question..."
-      />
-      
       <div className="space-y-3">
         {posts.map((post) => (
           <PostCard

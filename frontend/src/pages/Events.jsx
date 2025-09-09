@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import HubLayout from "../components/HubLayout";
 import {createEvent,getEvents,updateEvent,deleteEvent,eventRSVP} from "../api/events";
 import createSession  from "../api/auth";
-import EventInputBox from "../components/EventInputBox";
 import EventCard from "../components/EventCard";
 
 export default function Events() {
@@ -78,11 +77,8 @@ const saveEdit = async (id,editingContent) => {
       hubIcon="🔍" 
       hubDescription="Discover and share local events and activities"
       hubbanner="/events.png"
+      handleSubmit={handleSubmit}
     >
-      <EventInputBox 
-        onSubmit={handleSubmit}
-      />
-      
       <div className="space-y-3">
         {events.map((event) => (
           <EventCard

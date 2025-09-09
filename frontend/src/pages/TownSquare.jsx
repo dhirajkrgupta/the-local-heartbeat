@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import InputBox from "../components/InputBox";
 import PostCard from "../components/PostCard";
 import HubLayout from "../components/HubLayout";
 import { createPost, deletePost, getPosts, updatePost, votePost } from "../api/posts";
@@ -73,16 +72,12 @@ const saveEdit = async (postId,editingContent) => {
   };
   return (
         <HubLayout 
-      hubName="Town Square" 
+      hubName="TownSquare" 
       hubIcon="🏛️" 
       hubDescription="Local community board"
       hubbanner="/townsquarebanner.png"
+      handleSubmit={onSubmit}
     >
-      <InputBox 
-        onSubmit={onSubmit}
-        placeholder="What's happening in your neighborhood?"
-      />
-      
       <div className="space-y-3">
         {posts.map((post) => (
           <PostCard

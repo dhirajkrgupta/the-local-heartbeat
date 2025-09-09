@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import InputBox from "../components/InputBox";
 import PostCard from "../components/PostCard";
 import HubLayout from "../components/HubLayout";
 import {
@@ -10,7 +9,6 @@ import {
   votePost,
 } from "../api/posts";
 import createSession from "../api/auth";
-import HubBanner from "../components/HubBanner";
 
 export default function BulletinBoard() {
   const [content, setContent] = useState("");
@@ -82,10 +80,11 @@ export default function BulletinBoard() {
   };
   return (
     <HubLayout
-      hubName="Bulletin Board"
+      hubName="BulletinBoard"
       hubIcon="📌"
       hubDescription="Community announcements and updates"
       hubbanner="/bulletinboardbanner.png"
+      handleSubmit={handleSubmit}
     >
       <div className="space-y-3">
         {posts.map((post) => (

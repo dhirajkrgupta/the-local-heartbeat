@@ -31,11 +31,18 @@ let routes = [
     }
   },
   {
+    path:"/createpost",
+    lazy:{
+        Component: async () => (await import("../pages/Submit")).default,
+    }
+  },
+  {
     path: "*",
     lazy: {
-      Component: async () => (await import("../components/PostEditor")).default,
+      Component: async () => (await import("../pages/NotFound")).default,
     },
   },
+  
 ];
 
 export default routes;

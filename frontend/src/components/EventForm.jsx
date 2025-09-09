@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function EventInputBox({ onSubmit }) {
+export default function EventForm({ onSubmit }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");

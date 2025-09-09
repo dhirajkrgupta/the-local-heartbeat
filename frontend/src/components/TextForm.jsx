@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function InputBox({ onSubmit, placeholder = "What's happening in your neighborhood?" }) {
+export default function TextFrom({ onSubmit, placeholder = "What's happening in your neighborhood?" }) {
   const [content, setContent] = useState("");
 
   const handleSubmit =async () => {
